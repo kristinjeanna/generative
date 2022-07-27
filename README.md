@@ -14,5 +14,5 @@ Package `generative` implements useful types and logic for writing generative ar
 ## Install
 
 ```shell
-go get -u github.com/kristinjeanna/redact
+go get -u github.com/kristinjeanna/generative
 ```

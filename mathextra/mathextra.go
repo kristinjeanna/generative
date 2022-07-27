@@ -11,7 +11,10 @@ const (
 	QuarterPi         = Pi / 4
 )
 
-// Floor returns the math.Floor when v is positive, and returns the math.Ceil when v is negative.
+// Floor returns the math.Floor when v is positive, and returns the math.Ceil
+// when v is negative. Stated differently, Floor returns the largest mathematical
+// integer less than v when v is positive and the smallest mathematical integer
+// greater than v when v is negative.
 func Floor(v float64) float64 {
 	switch {
 	case v < 0:
@@ -21,10 +24,12 @@ func Floor(v float64) float64 {
 	}
 }
 
-// Normalize normalizes an angle theta to a value from 0 to π (inclusive) for positive angles and 0 to -π (exclusive) for negative angles. -π is always returned as π.
+// Normalize normalizes an angle theta to a value from 0 to π (inclusive) for
+// positive angles and 0 to -π (exclusive) for negative angles. -π is always
+// returned as π.
 func Normalize(theta float64) float64 {
 	multiples := Floor(theta / TwoPi)
-	theta -= -multiples * TwoPi
+	theta -= multiples * TwoPi
 
 	var result float64
 	if theta > 0 {

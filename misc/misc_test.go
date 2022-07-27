@@ -108,6 +108,7 @@ func TestLastNIndexesWrap_WithError(t *testing.T) {
 		{-1, 5, 100},  // fromIndex cannot be less than zero
 		{10, 5, -1},   // max cannot be less than zero
 		{10, 5, 5},    // max cannot be less than or equal to fromIndex
+		{10, 5, 10},   // max cannot be less than or equal to fromIndex
 	}
 
 	for _, tc := range cases {

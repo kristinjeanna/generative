@@ -11,9 +11,9 @@ import (
 
 func TestLastNIndexes(t *testing.T) {
 	type testCase struct {
-		fromIndex int
-		n         int
-		expected  []int
+		index    int
+		n        int
+		expected []int
 	}
 
 	cases := []testCase{
@@ -35,8 +35,8 @@ func TestLastNIndexes(t *testing.T) {
 	}
 
 	for _, tc := range cases {
-		t.Run(fmt.Sprintf("fromIndex=%d;n=%d; ", tc.fromIndex, tc.n), func(t *testing.T) {
-			got, err := LastNIndexes(tc.fromIndex, tc.n)
+		t.Run(fmt.Sprintf("index=%d;n=%d", tc.index, tc.n), func(t *testing.T) {
+			got, err := LastNIndexes(tc.index, tc.n)
 			if err != nil {
 				t.Error(err)
 			}
@@ -49,18 +49,18 @@ func TestLastNIndexes(t *testing.T) {
 
 func TestLastNIndexes_WithError(t *testing.T) {
 	type testCase struct {
-		fromIndex int
-		n         int
+		index int
+		n     int
 	}
 	cases := []testCase{
 		{10, -1}, // n cannot be less than or equal to zero
 		{10, 0},  // n cannot be less than or equal to zero
-		{-1, 5},  // fromIndex cannot be less than zero
+		{-1, 5},  // index cannot be less than zero
 	}
 
 	for _, tc := range cases {
-		t.Run(fmt.Sprintf("fromIndex=%d;n=%d; ", tc.fromIndex, tc.n), func(t *testing.T) {
-			_, err := LastNIndexes(tc.fromIndex, tc.n)
+		t.Run(fmt.Sprintf("index=%d;n=%d", tc.index, tc.n), func(t *testing.T) {
+			_, err := LastNIndexes(tc.index, tc.n)
 			if err == nil {
 				t.Error(errors.ExpectedError)
 			}
@@ -70,10 +70,10 @@ func TestLastNIndexes_WithError(t *testing.T) {
 
 func TestLastNIndexesWrap(t *testing.T) {
 	type testCase struct {
-		fromIndex int
-		n         int
-		max       int
-		expected  []int
+		index    int
+		n        int
+		max      int
+		expected []int
 	}
 
 	cases := []testCase{
@@ -84,8 +84,8 @@ func TestLastNIndexesWrap(t *testing.T) {
 	}
 
 	for _, tc := range cases {
-		t.Run(fmt.Sprintf("fromIndex=%d;n=%d;max=%d; ", tc.fromIndex, tc.n, tc.max), func(t *testing.T) {
-			got, err := LastNIndexesWrap(tc.fromIndex, tc.n, tc.max)
+		t.Run(fmt.Sprintf("index=%d;n=%d;max=%d", tc.index, tc.n, tc.max), func(t *testing.T) {
+			got, err := LastNIndexesWrap(tc.index, tc.n, tc.max)
 			if err != nil {
 				t.Error(err)
 			}
@@ -98,22 +98,22 @@ func TestLastNIndexesWrap(t *testing.T) {
 
 func TestLastNIndexesWrap_WithError(t *testing.T) {
 	type testCase struct {
-		fromIndex int
-		n         int
-		max       int
+		index int
+		n     int
+		max   int
 	}
 	cases := []testCase{
 		{10, -1, 100}, // n cannot be less than or equal to zero
 		{10, 0, 100},  // n cannot be less than or equal to zero
-		{-1, 5, 100},  // fromIndex cannot be less than zero
+		{-1, 5, 100},  // index cannot be less than zero
 		{10, 5, -1},   // max cannot be less than zero
-		{10, 5, 5},    // max cannot be less than or equal to fromIndex
-		{10, 5, 10},   // max cannot be less than or equal to fromIndex
+		{10, 5, 5},    // max cannot be less than or equal to index
+		{10, 5, 10},   // max cannot be less than or equal to index
 	}
 
 	for _, tc := range cases {
-		t.Run(fmt.Sprintf("fromIndex=%d;n=%d;max=%d; ", tc.fromIndex, tc.n, tc.max), func(t *testing.T) {
-			_, err := LastNIndexesWrap(tc.fromIndex, tc.n, tc.max)
+		t.Run(fmt.Sprintf("index=%d;n=%d;max=%d; ", tc.index, tc.n, tc.max), func(t *testing.T) {
+			_, err := LastNIndexesWrap(tc.index, tc.n, tc.max)
 			if err == nil {
 				t.Error(errors.ExpectedError)
 			}

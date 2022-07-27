@@ -24,7 +24,7 @@ func Floor(v float64) float64 {
 // Normalize normalizes an angle theta to a value from 0 to π (inclusive) for positive angles and 0 to -π (exclusive) for negative angles. -π is always returned as π.
 func Normalize(theta float64) float64 {
 	multiples := Floor(theta / TwoPi)
-	theta = theta - multiples*TwoPi
+	theta -= -multiples * TwoPi
 
 	var result float64
 	if theta > 0 {

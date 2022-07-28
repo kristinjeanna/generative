@@ -18,6 +18,11 @@ func Initialize(src mrnd.Source64) {
 	prng = src
 }
 
+// Get returns a math.Rand instance for the initialized PRNG.
+func Get() *mrnd.Rand {
+	return mrnd.New(prng)
+}
+
 // Float64 returns a random float64 from 0 to 1.
 //
 // An error is returned if the PRNG has not been initialized.

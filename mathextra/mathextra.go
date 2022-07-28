@@ -40,7 +40,7 @@ func Normalize(theta float64) float64 {
 			result = theta
 		}
 	} else {
-		if theta < -1*Pi {
+		if theta < -Pi {
 			// if less than -π, add 2π
 			result = theta + TwoPi
 		} else {
@@ -49,7 +49,7 @@ func Normalize(theta float64) float64 {
 	}
 
 	// favor π over -π
-	if result == -1*Pi {
+	if result == -Pi {
 		return Pi
 	}
 	return result

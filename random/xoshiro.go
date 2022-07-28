@@ -3,7 +3,6 @@ package random
 import (
 	"crypto/rand"
 	"encoding/binary"
-	"fmt"
 	mrnd "math/rand"
 
 	"github.com/kbjorklu/xoshiro"
@@ -19,13 +18,11 @@ func NewXoshiro512StarStar() mrnd.Source64 {
 		panic(err)
 	}
 	seed1 := int64(binary.BigEndian.Uint64(b))
-	fmt.Println("seed1: ", seed1)
 
 	// next, create a SplitMix64 PRNG with seed1; SplitMix64 is the
 	// recommended way to seed a xoshiro512** PRNG, per the authors
 	sm64 := xoshiro.NewSplitMix64(seed1)
 	seed2 := int64(sm64.Uint64())
-	fmt.Println("seed2: ", seed2)
 
 	// finally create the xoshiro512** PRNG
 	return xoshiro.NewXoshiro512StarStar(seed2)

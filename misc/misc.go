@@ -23,10 +23,10 @@ import (
 // (2) if index is less than zero.
 func LastNIndexes(index, n int) ([]int, error) {
 	if n <= 0 {
-		return nil, fmt.Errorf(errors.MustBeGreaterThanZeroDecimal, "n", "n", n)
+		return nil, errors.MustBeGreaterThanZeroDecimal("n", n)
 	}
 	if index < 0 {
-		return nil, fmt.Errorf(errors.MustBeGreaterThanOrEqualToZeroDecimal, "index", "index", index)
+		return nil, errors.MustBeGreaterThanOrEqualToZeroDecimal("index", index)
 	}
 
 	indexes := make([]int, 0)
@@ -57,13 +57,13 @@ func LastNIndexes(index, n int) ([]int, error) {
 // or max is less than zero, or (3) if index is greater than or equal to max.
 func LastNIndexesWrap(index, n, max int) ([]int, error) {
 	if n <= 0 {
-		return nil, fmt.Errorf(errors.MustBeGreaterThanZeroDecimal, "n", "n", n)
+		return nil, errors.MustBeGreaterThanZeroDecimal("n", n)
 	}
 	if index < 0 {
-		return nil, fmt.Errorf(errors.MustBeGreaterThanOrEqualToZeroDecimal, "index", "index", index)
+		return nil, errors.MustBeGreaterThanOrEqualToZeroDecimal("index", index)
 	}
 	if max < 0 {
-		return nil, fmt.Errorf(errors.MustBeGreaterThanOrEqualToZeroDecimal, "max", "max", max)
+		return nil, errors.MustBeGreaterThanOrEqualToZeroDecimal("max", max)
 	}
 	if index >= max {
 		return nil, fmt.Errorf("argument \"index\" must be less than argument \"max\"; index=%d; max=%d", index, max)

@@ -8,6 +8,7 @@ Package `generative` implements useful types and logic for writing generative ar
 <summary>Table of Contents</summary>
 
 - [Install](#install)
+- [Requirements](#requirements)
 
 </details>
 
@@ -16,3 +17,7 @@ Package `generative` implements useful types and logic for writing generative ar
 ```shell
 go get -u github.com/kristinjeanna/generative
 ```
+
+## Requirements
+
+This package requires a minimum of Go 1.18 due to its use of generics.

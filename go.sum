@@ -1,2 +1,4 @@
+github.com/kbjorklu/xoshiro v0.0.0-20180620171651-d44ffcd5f559 h1:AZTfZILmDfcuGOAoePY4h0ELg7O5mXJr9QbokCkYG3E=
+github.com/kbjorklu/xoshiro v0.0.0-20180620171651-d44ffcd5f559/go.mod h1:+AHnx6H/ovNpIdv+U7a4aMIlqKYS5E8idTe7cav1N4U=
 golang.org/x/exp v0.0.0-20220722155223-a9213eeb770e h1:+WEEuIdZHnUeJJmEUjyYC2gfUMj69yZXw17EnHg/otA=
 golang.org/x/exp v0.0.0-20220722155223-a9213eeb770e/go.mod h1:Kr81I6Kryrl9sr8s2FK3vxD90NdsKWRuOIl2O4CvYbA=

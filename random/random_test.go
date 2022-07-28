@@ -171,3 +171,29 @@ func TestUint8InRange(t *testing.T) {
 		}
 	}
 }
+
+func TestBool(t *testing.T) {
+	Initialize(NewXoshiro512StarStar())
+	var tResult, fResult int
+
+	for i := 0; i < iterations; i++ {
+		got, err := Bool()
+		if err != nil {
+			t.Error(err)
+		}
+
+		switch *got {
+		case true:
+			tResult++
+		default:
+			fResult++
+		}
+	}
+
+	// we should expect a fairly equal distribution of true and false values;
+	// a deviation of 5% or more from an equal distribution may cause an
+	// occasional failure of this test.
+	if float64(tResult) > float64(iterations)*0.55 {
+		t.Errorf("got an unexpectedly large number of true values; count=%d", tResult)
+	}
+}

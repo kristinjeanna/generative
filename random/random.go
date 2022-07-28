@@ -204,3 +204,16 @@ func Uint8InRange(min, max uint8) (*uint8, error) {
 	result := uint8(*fraction*float64(diff)) + min
 	return &result, nil
 }
+
+// Bool returns a random boolean.
+//
+// An error is returned if the PRNG has not been initialized.
+func Bool() (*bool, error) {
+	fraction, err := Float64()
+	if err != nil {
+		return nil, err
+	}
+
+	result := *fraction >= 0.5
+	return &result, nil
+}

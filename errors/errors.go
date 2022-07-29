@@ -9,6 +9,7 @@ const (
 	mustBeGreaterThanOrEqualToZeroDecimal string = "argument %q must be greater than or equal to 0; %s=%d"
 	mustBeGreaterThanFloat                string = "argument %q must be greater than argument %q; %s=%f, %s=%f"
 	mustBeGreaterThanDecimal              string = "argument %q must be greater than argument %q; %s=%d, %s=%d"
+	mustNotBeNil                          string = "argument %q must not be nil"
 
 	ExpectedError   string = "expected an error, but got nil"
 	UnexpectedError string = "got an unexpected error; err=%v"
@@ -26,7 +27,7 @@ type MustBeDecimal interface {
 	int | int8 | int16 | int32 | int64 | uint | uint8 | uint16 | uint32 | uint64
 }
 
-// MustBeGreaterThanZeroFloat returns an error message for float values
+// MustBeGreaterThanZeroFloat returns an error for float values
 // where the value must be greater than zero.
 // This is just a convenience method for creating the error instance. It performs
 // no evaluation of value.
@@ -34,7 +35,7 @@ func MustBeGreaterThanZeroFloat[T MustBeFloat](name string, value T) error {
 	return fmt.Errorf(mustBeGreaterThanZeroFloat, name, name, value)
 }
 
-// MustBeGreaterThanZeroDecimal returns an error message for decimal values
+// MustBeGreaterThanZeroDecimal returns an error for decimal values
 // where the value must be greater than zero.
 // This is just a convenience method for creating the error instance. It performs
 // no evaluation of value.
@@ -42,7 +43,7 @@ func MustBeGreaterThanZeroDecimal[T MustBeDecimal](name string, value T) error {
 	return fmt.Errorf(mustBeGreaterThanZeroDecimal, name, name, value)
 }
 
-// MustBeGreaterThanOrEqualToZeroFloat returns an error message for float values
+// MustBeGreaterThanOrEqualToZeroFloat returns an error for float values
 // where the value must be greater than or equal to zero.
 // This is just a convenience method for creating the error instance. It performs
 // no evaluation of value.
@@ -50,7 +51,7 @@ func MustBeGreaterThanOrEqualToZeroFloat[T MustBeFloat](name string, value T) er
 	return fmt.Errorf(mustBeGreaterThanOrEqualToZeroFloat, name, name, value)
 }
 
-// MustBeGreaterThanOrEqualToZeroDecimal returns an error message for decimal values
+// MustBeGreaterThanOrEqualToZeroDecimal returns an error for decimal values
 // where the value must be greater than or equal to zero.
 // This is just a convenience method for creating the error instance. It performs
 // no evaluation of value.
@@ -58,7 +59,7 @@ func MustBeGreaterThanOrEqualToZeroDecimal[T MustBeDecimal](name string, value T
 	return fmt.Errorf(mustBeGreaterThanOrEqualToZeroDecimal, name, name, value)
 }
 
-// MustBeGreaterThanFloat returns an error message for float values
+// MustBeGreaterThanFloat returns an error for float values
 // where the first value must be greater than the second value.
 // This is just a convenience method for creating the error instance. It performs
 // no evaluation of the values.
@@ -66,10 +67,17 @@ func MustBeGreaterThanFloat[T MustBeFloat](name1 string, value1 T, name2 string,
 	return fmt.Errorf(mustBeGreaterThanFloat, name1, name2, name1, value1, name2, value2)
 }
 
-// MustBeGreaterThanDecimal returns an error message for decimal values
+// MustBeGreaterThanDecimal returns an error for decimal values
 // where the first value must be greater than the second value.
 // This is just a convenience method for creating the error instance. It performs
 // no evaluation of the values.
 func MustBeGreaterThanDecimal[T MustBeDecimal](name1 string, value1 T, name2 string, value2 T) error {
 	return fmt.Errorf(mustBeGreaterThanDecimal, name1, name2, name1, value1, name2, value2)
+}
+
+// MustNotBeNil returns an error regarding a nil argument .
+// This is just a convenience method for creating the error instance. It performs
+// no evaluation of value.
+func MustNotBeNil(name string) error {
+	return fmt.Errorf(mustNotBeNil, name)
 }

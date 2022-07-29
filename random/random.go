@@ -9,216 +9,135 @@ import (
 )
 
 var (
-	prng mrnd.Source64
-
 	ErrPRNGNotInitialized = errors.New("PRNG not initialized")
 )
 
-func Initialize(src mrnd.Source64) {
-	prng = src
+// Rand is a math.Source64 that wraps an underlying math.Source64
+// and implements additional random number methods.
+type Rand struct {
+	prng mrnd.Source64
 }
 
-// Get returns a math.Rand instance for the initialized PRNG.
-func Get() *mrnd.Rand {
-	return mrnd.New(prng)
+func New(src mrnd.Source64) (*Rand, error) {
+	if src == nil {
+		return nil, generrs.MustNotBeNil("src")
+	}
+	return &Rand{prng: src}, nil
+}
+
+func (r Rand) Int63() int64 {
+	return r.prng.Int63()
+}
+
+func (r Rand) Seed(seed int64) {
+	r.prng.Seed(seed)
 }
 
 // Float64 returns a random float64 from 0 to 1.
-//
-// An error is returned if the PRNG has not been initialized.
-func Float64() (*float64, error) {
-	if prng == nil {
-		return nil, ErrPRNGNotInitialized
-	}
-
-	result := float64(prng.Uint64()) / float64(math.MaxUint64)
-	return &result, nil
+func (r Rand) Float64() float64 {
+	return float64(r.prng.Uint64()) / float64(math.MaxUint64)
 }
 
 // Float64InRange returns a random float32 from min to max.
 //
-// An error is returned if either (1) the PRNG has not been initialized, or
-// (2) min is greater than max.
-func Float64InRange(min, max float64) (*float64, error) {
-	fraction, err := Float64()
-	if err != nil {
-		return nil, err
-	}
-
+// An error is returned if min is greater than max.
+func (r Rand) Float64InRange(min, max float64) (float64, error) {
 	if max <= min {
-		return nil, generrs.MustBeGreaterThanFloat("max", max, "min", min)
+		return 0, generrs.MustBeGreaterThanFloat("max", max, "min", min)
 	}
 
 	diff := max - min
-	result := *fraction*diff + min
-	return &result, nil
+	return r.Float64()*diff + min, nil
 }
 
 // Float32 returns a random float32 from 0 to 1.
-//
-// An error is returned if the PRNG has not been initialized.
-func Float32() (*float32, error) {
-	f, err := Float64()
-	if err != nil {
-		return nil, err
-	}
-
-	result := float32(*f)
-	return &result, nil
+func (r Rand) Float32() float32 {
+	return float32(r.Float64())
 }
 
 // Float32InRange returns a random float32 from min to max.
 //
-// An error is returned if either (1) the PRNG has not been initialized, or
-// (2) min is greater than max.
-func Float32InRange(min, max float32) (*float32, error) {
-	fraction, err := Float32()
-	if err != nil {
-		return nil, err
-	}
-
+// An error is returned if min is greater than max.
+func (r Rand) Float32InRange(min, max float32) (float32, error) {
 	if max <= min {
-		return nil, generrs.MustBeGreaterThanFloat("max", max, "min", min)
+		return 0, generrs.MustBeGreaterThanFloat("max", max, "min", min)
 	}
 
 	diff := max - min
-	result := *fraction*diff + min
-	return &result, nil
+	return r.Float32()*diff + min, nil
 }
 
 // Uint64 returns a random uint64.
 //
 // An error is returned if the PRNG has not been initialized.
-func Uint64() (*uint64, error) {
-	if prng == nil {
-		return nil, ErrPRNGNotInitialized
-	}
-
-	result := prng.Uint64()
-	return &result, nil
+func (r Rand) Uint64() uint64 {
+	return r.prng.Uint64()
 }
 
 // Uint64InRange returns a random uint64 from min to max.
 //
-// An error is returned if either (1) the PRNG has not been initialized, or
-// (2) min is greater than max.
-func Uint64InRange(min, max uint64) (*uint64, error) {
-	fraction, err := Float64()
-	if err != nil {
-		return nil, err
-	}
-
+// An error is returned if min is greater than max.
+func (r Rand) Uint64InRange(min, max uint64) (uint64, error) {
 	if max <= min {
-		return nil, generrs.MustBeGreaterThanDecimal("max", max, "min", min)
+		return 0, generrs.MustBeGreaterThanDecimal("max", max, "min", min)
 	}
 
 	diff := max - min
-	result := uint64(*fraction*float64(diff)) + min
-	return &result, nil
+	return uint64(r.Float64()*float64(diff)) + min, nil
 }
 
 // Uint32 returns a random uint32.
-//
-// An error is returned if the PRNG has not been initialized.
-func Uint32() (*uint32, error) {
-	if prng == nil {
-		return nil, ErrPRNGNotInitialized
-	}
-
-	result := uint32(prng.Uint64())
-	return &result, nil
+func (r Rand) Uint32() uint32 {
+	return uint32(r.Uint64())
 }
 
 // Uint32InRange returns a random uint32 from min to max.
 //
-// An error is returned if either (1) the PRNG has not been initialized, or
-// (2) min is greater than max.
-func Uint32InRange(min, max uint32) (*uint32, error) {
-	fraction, err := Float64()
-	if err != nil {
-		return nil, err
-	}
-
+// An error is returned if min is greater than max.
+func (r Rand) Uint32InRange(min, max uint32) (uint32, error) {
 	if max <= min {
-		return nil, generrs.MustBeGreaterThanDecimal("max", max, "min", min)
+		return 0, generrs.MustBeGreaterThanDecimal("max", max, "min", min)
 	}
 
 	diff := max - min
-	result := uint32(*fraction*float64(diff)) + min
-	return &result, nil
+	return uint32(r.Float64()*float64(diff)) + min, nil
 }
 
 // Uint16 returns a random uint16.
-//
-// An error is returned if the PRNG has not been initialized.
-func Uint16() (*uint16, error) {
-	if prng == nil {
-		return nil, ErrPRNGNotInitialized
-	}
-
-	result := uint16(prng.Uint64())
-	return &result, nil
+func (r Rand) Uint16() uint16 {
+	return uint16(r.Uint64())
 }
 
 // Uint16InRange returns a random uint16 from min to max.
 //
-// An error is returned if either (1) the PRNG has not been initialized, or
-// (2) min is greater than max.
-func Uint16InRange(min, max uint16) (*uint16, error) {
-	fraction, err := Float64()
-	if err != nil {
-		return nil, err
-	}
-
+// An error is returned if min is greater than max.
+func (r Rand) Uint16InRange(min, max uint16) (uint16, error) {
 	if max <= min {
-		return nil, generrs.MustBeGreaterThanDecimal("max", max, "min", min)
+		return 0, generrs.MustBeGreaterThanDecimal("max", max, "min", min)
 	}
 
 	diff := max - min
-	result := uint16(*fraction*float64(diff)) + min
-	return &result, nil
+	return uint16(r.Float64()*float64(diff)) + min, nil
 }
 
 // Uint8 returns a random uint8.
-//
-// An error is returned if the PRNG has not been initialized.
-func Uint8() (*uint8, error) {
-	if prng == nil {
-		return nil, ErrPRNGNotInitialized
-	}
-
-	result := uint8(prng.Uint64())
-	return &result, nil
+func (r Rand) Uint8() uint8 {
+	return uint8(r.Uint64())
 }
 
 // Uint8InRange returns a random uint8 from min to max.
 //
-// An error is returned if either (1) the PRNG has not been initialized, or
-// (2) min is greater than max.
-func Uint8InRange(min, max uint8) (*uint8, error) {
-	fraction, err := Float64()
-	if err != nil {
-		return nil, err
-	}
-
+// An error is returned if min is greater than max.
+func (r Rand) Uint8InRange(min, max uint8) (uint8, error) {
 	if max <= min {
-		return nil, generrs.MustBeGreaterThanDecimal("max", max, "min", min)
+		return 0, generrs.MustBeGreaterThanDecimal("max", max, "min", min)
 	}
 
 	diff := max - min
-	result := uint8(*fraction*float64(diff)) + min
-	return &result, nil
+	return uint8(r.Float64()*float64(diff)) + min, nil
 }
 
 // Bool returns a random boolean.
-//
-// An error is returned if the PRNG has not been initialized.
-func Bool() (*bool, error) {
-	fraction, err := Float64()
-	if err != nil {
-		return nil, err
-	}
-
-	result := *fraction >= 0.5
-	return &result, nil
+func (r Rand) Bool() bool {
+	return r.Float64() >= 0.5
 }

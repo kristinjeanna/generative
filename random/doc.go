@@ -1,8 +1,3 @@
-// Package random provides random number functions based on a xoshiro512** PRNG.
-//
-// References
-//
-// - https://vigna.di.unimi.it/xorshift/
-//
-// - https://github.com/kbjorklu/xoshiro
+// Package random implements a math.Source64 wrapper that implements
+// additional convenience functions..
 package random

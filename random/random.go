@@ -141,3 +141,71 @@ func (r Rand) Uint8InRange(min, max uint8) (uint8, error) {
 func (r Rand) Bool() bool {
 	return r.Float64() >= 0.5
 }
+
+// Int8 returns a random int8.
+func (r Rand) Int8() int8 {
+	return int8(r.Uint8())
+}
+
+// Int8InRange returns a random int8 from min to max.
+//
+// An error is returned if min is greater than max.
+func (r Rand) Int8InRange(min, max int8) (int8, error) {
+	if max <= min {
+		return 0, generrs.MustBeGreaterThanDecimal("max", max, "min", min)
+	}
+
+	diff := max - min
+	return int8(r.Float64()*float64(diff)) + min, nil
+}
+
+// Int16 returns a random int16.
+func (r Rand) Int16() int16 {
+	return int16(r.Uint16())
+}
+
+// Int16InRange returns a random int16 from min to max.
+//
+// An error is returned if min is greater than max.
+func (r Rand) Int16InRange(min, max int16) (int16, error) {
+	if max <= min {
+		return 0, generrs.MustBeGreaterThanDecimal("max", max, "min", min)
+	}
+
+	diff := max - min
+	return int16(r.Float64()*float64(diff)) + min, nil
+}
+
+// Int32 returns a random int32.
+func (r Rand) Int32() int32 {
+	return int32(r.Uint32())
+}
+
+// Int32InRange returns a random int32 from min to max.
+//
+// An error is returned if min is greater than max.
+func (r Rand) Int32InRange(min, max int32) (int32, error) {
+	if max <= min {
+		return 0, generrs.MustBeGreaterThanDecimal("max", max, "min", min)
+	}
+
+	diff := max - min
+	return int32(r.Float64()*float64(diff)) + min, nil
+}
+
+// Int64 returns a random int64.
+func (r Rand) Int64() int64 {
+	return int64(r.Uint64())
+}
+
+// Int64InRange returns a random int64 from min to max.
+//
+// An error is returned if min is greater than max.
+func (r Rand) Int64InRange(min, max int64) (int64, error) {
+	if max <= min {
+		return 0, generrs.MustBeGreaterThanDecimal("max", max, "min", min)
+	}
+
+	diff := max - min
+	return int64(r.Float64()*float64(diff)) + min, nil
+}

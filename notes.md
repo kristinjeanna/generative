@@ -7,3 +7,4 @@
 - github.com/aquilax/go-perlin
 - github.com/perlin-network/noise
 - github.com/pzsz/voronoi
+- github.com/montanaflynn/stats

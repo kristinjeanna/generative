@@ -1,6 +1,7 @@
 package random
 
 import (
+	"fmt"
 	"testing"
 	"time"
 
@@ -8,7 +9,16 @@ import (
 )
 
 const (
-	iterations int = 100000
+	iterations int     = 100000
+	leeway     float64 = 0.05 // ±5% at the midpoint of the number of iterations
+
+	minExpected int = 45000
+	maxExpected int = 55000
+)
+
+var (
+	msgTrueValues     string = fmt.Sprintf("the number of true values was either less than %d or greater than %d; count=", minExpected, maxExpected) + "%d"
+	msgPositiveValues string = fmt.Sprintf("the number of positive values was either less than %d or greater than %d; count=", minExpected, maxExpected) + "%d"
 )
 
 func TestNew(t *testing.T) {
@@ -216,22 +226,156 @@ func TestUint8InRange_Error(t *testing.T) {
 func TestBool(t *testing.T) {
 	r, err := New(NewXoshiro512StarStar())
 	assert.NoError(t, err)
-	var tResult, fResult int
+	var tCount int
 
 	for i := 0; i < iterations; i++ {
 		got := r.Bool()
 
-		switch got {
-		case true:
-			tResult++
-		default:
-			fResult++
+		if got {
+			tCount++
 		}
 	}
 
-	// we should expect a fairly equal distribution of true and false values;
-	// a deviation of 5% or more from a roughly equal distribution may cause
-	// an occasional failure of this test.
-	assert.True(t, float64(tResult) <= float64(iterations)*0.55,
-		"got an unexpectedly large number of true values; count=%d", tResult)
+	result := tCount >= minExpected && tCount <= maxExpected
+	assert.True(t, result, msgTrueValues, tCount)
+}
+
+func TestInt8(t *testing.T) {
+	r, err := New(NewXoshiro512StarStar())
+	assert.NoError(t, err)
+	var posCount int
+
+	for i := 0; i < iterations; i++ {
+		got := r.Int8()
+
+		if got >= 0 {
+			posCount++
+		}
+	}
+
+	result := posCount >= minExpected && posCount <= maxExpected
+	assert.True(t, result, msgPositiveValues, posCount)
+}
+
+func TestInt8InRange(t *testing.T) {
+	r, err := New(NewXoshiro512StarStar())
+	assert.NoError(t, err)
+	var posCount int
+
+	for i := 0; i < iterations; i++ {
+		got, err := r.Int8InRange(-100, 100)
+		assert.NoError(t, err)
+
+		if got >= 0 {
+			posCount++
+		}
+	}
+
+	result := posCount >= minExpected && posCount <= maxExpected
+	assert.True(t, result, msgPositiveValues, posCount)
+}
+
+func TestInt16(t *testing.T) {
+	r, err := New(NewXoshiro512StarStar())
+	assert.NoError(t, err)
+	var posCount int
+
+	for i := 0; i < iterations; i++ {
+		got := r.Int16()
+
+		if got >= 0 {
+			posCount++
+		}
+	}
+
+	result := posCount >= minExpected && posCount <= maxExpected
+	assert.True(t, result, msgPositiveValues, posCount)
+}
+
+func TestInt16InRange(t *testing.T) {
+	r, err := New(NewXoshiro512StarStar())
+	assert.NoError(t, err)
+	var posCount int
+
+	for i := 0; i < iterations; i++ {
+		got, err := r.Int16InRange(-15000, 15000)
+		assert.NoError(t, err)
+
+		if got >= 0 {
+			posCount++
+		}
+	}
+
+	result := posCount >= minExpected && posCount <= maxExpected
+	assert.True(t, result, msgPositiveValues, posCount)
+}
+
+func TestInt32(t *testing.T) {
+	r, err := New(NewXoshiro512StarStar())
+	assert.NoError(t, err)
+	var posCount int
+
+	for i := 0; i < iterations; i++ {
+		got := r.Int32()
+
+		if got >= 0 {
+			posCount++
+		}
+	}
+
+	result := posCount >= minExpected && posCount <= maxExpected
+	assert.True(t, result, msgPositiveValues, posCount)
+}
+
+func TestInt32InRange(t *testing.T) {
+	r, err := New(NewXoshiro512StarStar())
+	assert.NoError(t, err)
+	var posCount int
+
+	for i := 0; i < iterations; i++ {
+		got, err := r.Int32InRange(-21474836, 21474836)
+		assert.NoError(t, err)
+
+		if got >= 0 {
+			posCount++
+		}
+	}
+
+	result := posCount >= minExpected && posCount <= maxExpected
+	assert.True(t, result, msgPositiveValues, posCount)
+}
+
+func TestInt64(t *testing.T) {
+	r, err := New(NewXoshiro512StarStar())
+	assert.NoError(t, err)
+	var posCount int
+
+	for i := 0; i < iterations; i++ {
+		got := r.Int64()
+
+		if got >= 0 {
+			posCount++
+		}
+	}
+
+	result := posCount >= minExpected && posCount <= maxExpected
+	assert.True(t, result, msgPositiveValues, posCount)
+}
+
+func TestInt64InRange(t *testing.T) {
+	r, err := New(NewXoshiro512StarStar())
+	assert.NoError(t, err)
+	var posCount int
+
+	for i := 0; i < iterations; i++ {
+		got, err := r.Int64InRange(-922337203685477, 922337203685477)
+		assert.NoError(t, err)
+
+		if got >= 0 {
+			posCount++
+		}
+	}
+
+	result := posCount >= minExpected && posCount <= maxExpected
+	assert.True(t, result, msgPositiveValues, posCount)
 }

@@ -3,6 +3,8 @@ package mathextra
 import (
 	"fmt"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestFloor(t *testing.T) {
@@ -21,9 +23,7 @@ func TestFloor(t *testing.T) {
 	for _, tc := range cases {
 		t.Run(fmt.Sprintf("input=%f;expected=%f", tc.input, tc.expected), func(t *testing.T) {
 			got := Floor(tc.input)
-			if tc.expected != got {
-				t.Errorf("expected '%v', but got '%v'", tc.expected, got)
-			}
+			assert.Equal(t, tc.expected, got)
 		})
 	}
 }
@@ -57,9 +57,7 @@ func TestNormalize(t *testing.T) {
 	for _, tc := range cases {
 		t.Run(fmt.Sprintf("input=%f;expected=%f", tc.input, tc.expected), func(t *testing.T) {
 			got := Normalize(tc.input)
-			if tc.expected != got {
-				t.Errorf("expected '%v', but got '%v'", tc.expected, got)
-			}
+			assert.Equal(t, tc.expected, got)
 		})
 	}
 }
@@ -93,9 +91,7 @@ func TestToRadians(t *testing.T) {
 	for _, tc := range cases {
 		t.Run(fmt.Sprintf("inputDegrees=%f;expected=%f", tc.inputDegrees, tc.expected), func(t *testing.T) {
 			got := ToRadians(tc.inputDegrees)
-			if tc.expected != got {
-				t.Errorf("expected '%v', but got '%v'", tc.expected, got)
-			}
+			assert.Equal(t, tc.expected, got)
 		})
 	}
 }

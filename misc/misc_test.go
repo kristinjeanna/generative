@@ -4,8 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/kristinjeanna/generative/errors"
-
+	"github.com/stretchr/testify/assert"
 	"golang.org/x/exp/slices"
 )
 
@@ -37,12 +36,8 @@ func TestLastNIndexes(t *testing.T) {
 	for _, tc := range cases {
 		t.Run(fmt.Sprintf("index=%d;n=%d", tc.index, tc.n), func(t *testing.T) {
 			got, err := LastNIndexes(tc.index, tc.n)
-			if err != nil {
-				t.Error(err)
-			}
-			if !slices.Equal(tc.expected, got) {
-				t.Errorf("expected '%v', but got '%v'", tc.expected, got)
-			}
+			assert.NoError(t, err)
+			assert.True(t, slices.Equal(tc.expected, got))
 		})
 	}
 }
@@ -61,9 +56,7 @@ func TestLastNIndexes_WithError(t *testing.T) {
 	for _, tc := range cases {
 		t.Run(fmt.Sprintf("index=%d;n=%d", tc.index, tc.n), func(t *testing.T) {
 			_, err := LastNIndexes(tc.index, tc.n)
-			if err == nil {
-				t.Error(errors.ExpectedError)
-			}
+			assert.Error(t, err)
 		})
 	}
 }
@@ -86,12 +79,8 @@ func TestLastNIndexesWrap(t *testing.T) {
 	for _, tc := range cases {
 		t.Run(fmt.Sprintf("index=%d;n=%d;max=%d", tc.index, tc.n, tc.max), func(t *testing.T) {
 			got, err := LastNIndexesWrap(tc.index, tc.n, tc.max)
-			if err != nil {
-				t.Error(err)
-			}
-			if !slices.Equal(tc.expected, got) {
-				t.Errorf("expected '%v', but got '%v'", tc.expected, got)
-			}
+			assert.NoError(t, err)
+			assert.True(t, slices.Equal(tc.expected, got))
 		})
 	}
 }
@@ -114,9 +103,7 @@ func TestLastNIndexesWrap_WithError(t *testing.T) {
 	for _, tc := range cases {
 		t.Run(fmt.Sprintf("index=%d;n=%d;max=%d; ", tc.index, tc.n, tc.max), func(t *testing.T) {
 			_, err := LastNIndexesWrap(tc.index, tc.n, tc.max)
-			if err == nil {
-				t.Error(errors.ExpectedError)
-			}
+			assert.Error(t, err)
 		})
 	}
 }

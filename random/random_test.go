@@ -9,9 +9,7 @@ import (
 )
 
 const (
-	iterations int     = 100000
-	leeway     float64 = 0.05 // ±5% at the midpoint of the number of iterations
-
+	iterations  int = 100000
 	minExpected int = 45000
 	maxExpected int = 55000
 )

@@ -273,6 +273,14 @@ func TestInt8InRange(t *testing.T) {
 	assert.True(t, result, msgPositiveValues, posCount)
 }
 
+func TestInt8InRange_Error(t *testing.T) {
+	r, err := New(NewXoshiro512StarStar())
+	assert.NoError(t, err)
+
+	_, err = r.Int8InRange(50, 20)
+	assert.Error(t, err)
+}
+
 func TestInt16(t *testing.T) {
 	r, err := New(NewXoshiro512StarStar())
 	assert.NoError(t, err)
@@ -306,6 +314,14 @@ func TestInt16InRange(t *testing.T) {
 
 	result := posCount >= minExpected && posCount <= maxExpected
 	assert.True(t, result, msgPositiveValues, posCount)
+}
+
+func TestInt16InRange_Error(t *testing.T) {
+	r, err := New(NewXoshiro512StarStar())
+	assert.NoError(t, err)
+
+	_, err = r.Int16InRange(500, 20)
+	assert.Error(t, err)
 }
 
 func TestInt32(t *testing.T) {
@@ -343,6 +359,14 @@ func TestInt32InRange(t *testing.T) {
 	assert.True(t, result, msgPositiveValues, posCount)
 }
 
+func TestInt32InRange_Error(t *testing.T) {
+	r, err := New(NewXoshiro512StarStar())
+	assert.NoError(t, err)
+
+	_, err = r.Int32InRange(500, 20)
+	assert.Error(t, err)
+}
+
 func TestInt64(t *testing.T) {
 	r, err := New(NewXoshiro512StarStar())
 	assert.NoError(t, err)
@@ -376,4 +400,12 @@ func TestInt64InRange(t *testing.T) {
 
 	result := posCount >= minExpected && posCount <= maxExpected
 	assert.True(t, result, msgPositiveValues, posCount)
+}
+
+func TestInt64InRange_Error(t *testing.T) {
+	r, err := New(NewXoshiro512StarStar())
+	assert.NoError(t, err)
+
+	_, err = r.Int64InRange(500, 20)
+	assert.Error(t, err)
 }

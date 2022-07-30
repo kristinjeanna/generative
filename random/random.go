@@ -26,11 +26,11 @@ func New(src mrnd.Source64) (*Rand, error) {
 }
 
 func (r Rand) Int63() int64 {
-	return r.prng.Int63()
+	return r.prng.Int63() // coverage only
 }
 
 func (r Rand) Seed(seed int64) {
-	r.prng.Seed(seed)
+	r.prng.Seed(seed) // coverage only
 }
 
 // Float64 returns a random float64 from 0 to 1.
@@ -40,7 +40,7 @@ func (r Rand) Float64() float64 {
 
 // Float64InRange returns a random float32 from min to max.
 //
-// An error is returned if min is greater than max.
+// An error is returned if max is less than or equal to min.
 func (r Rand) Float64InRange(min, max float64) (float64, error) {
 	if max <= min {
 		return 0, generrs.MustBeGreaterThanFloat("max", max, "min", min)
@@ -57,7 +57,7 @@ func (r Rand) Float32() float32 {
 
 // Float32InRange returns a random float32 from min to max.
 //
-// An error is returned if min is greater than max.
+// An error is returned if max is less than or equal to min.
 func (r Rand) Float32InRange(min, max float32) (float32, error) {
 	if max <= min {
 		return 0, generrs.MustBeGreaterThanFloat("max", max, "min", min)
@@ -76,7 +76,7 @@ func (r Rand) Uint64() uint64 {
 
 // Uint64InRange returns a random uint64 from min to max.
 //
-// An error is returned if min is greater than max.
+// An error is returned if max is less than or equal to min.
 func (r Rand) Uint64InRange(min, max uint64) (uint64, error) {
 	if max <= min {
 		return 0, generrs.MustBeGreaterThanDecimal("max", max, "min", min)
@@ -93,7 +93,7 @@ func (r Rand) Uint32() uint32 {
 
 // Uint32InRange returns a random uint32 from min to max.
 //
-// An error is returned if min is greater than max.
+// An error is returned if max is less than or equal to min.
 func (r Rand) Uint32InRange(min, max uint32) (uint32, error) {
 	if max <= min {
 		return 0, generrs.MustBeGreaterThanDecimal("max", max, "min", min)
@@ -110,7 +110,7 @@ func (r Rand) Uint16() uint16 {
 
 // Uint16InRange returns a random uint16 from min to max.
 //
-// An error is returned if min is greater than max.
+// An error is returned if max is less than or equal to min.
 func (r Rand) Uint16InRange(min, max uint16) (uint16, error) {
 	if max <= min {
 		return 0, generrs.MustBeGreaterThanDecimal("max", max, "min", min)
@@ -127,7 +127,7 @@ func (r Rand) Uint8() uint8 {
 
 // Uint8InRange returns a random uint8 from min to max.
 //
-// An error is returned if min is greater than max.
+// An error is returned if max is less than or equal to min.
 func (r Rand) Uint8InRange(min, max uint8) (uint8, error) {
 	if max <= min {
 		return 0, generrs.MustBeGreaterThanDecimal("max", max, "min", min)
@@ -149,7 +149,7 @@ func (r Rand) Int8() int8 {
 
 // Int8InRange returns a random int8 from min to max.
 //
-// An error is returned if min is greater than max.
+// An error is returned if max is less than or equal to min.
 func (r Rand) Int8InRange(min, max int8) (int8, error) {
 	if max <= min {
 		return 0, generrs.MustBeGreaterThanDecimal("max", max, "min", min)
@@ -166,7 +166,7 @@ func (r Rand) Int16() int16 {
 
 // Int16InRange returns a random int16 from min to max.
 //
-// An error is returned if min is greater than max.
+// An error is returned if max is less than or equal to min.
 func (r Rand) Int16InRange(min, max int16) (int16, error) {
 	if max <= min {
 		return 0, generrs.MustBeGreaterThanDecimal("max", max, "min", min)
@@ -183,7 +183,7 @@ func (r Rand) Int32() int32 {
 
 // Int32InRange returns a random int32 from min to max.
 //
-// An error is returned if min is greater than max.
+// An error is returned if max is less than or equal to min.
 func (r Rand) Int32InRange(min, max int32) (int32, error) {
 	if max <= min {
 		return 0, generrs.MustBeGreaterThanDecimal("max", max, "min", min)
@@ -200,7 +200,7 @@ func (r Rand) Int64() int64 {
 
 // Int64InRange returns a random int64 from min to max.
 //
-// An error is returned if min is greater than max.
+// An error is returned if max is less than or equal to min.
 func (r Rand) Int64InRange(min, max int64) (int64, error) {
 	if max <= min {
 		return 0, generrs.MustBeGreaterThanDecimal("max", max, "min", min)

@@ -10,9 +10,6 @@ const (
 	mustBeGreaterThanFloat                string = "argument %q must be greater than argument %q; %s=%f, %s=%f"
 	mustBeGreaterThanDecimal              string = "argument %q must be greater than argument %q; %s=%d, %s=%d"
 	mustNotBeNil                          string = "argument %q must not be nil"
-
-	ExpectedError   string = "expected an error, but got nil"
-	UnexpectedError string = "got an unexpected error; err=%v"
 )
 
 // TODO: consider moving type constraints to their own package if needed elsewhere besides this package

@@ -1,15 +1,10 @@
 package random
 
 import (
-	"errors"
 	"math"
 	mrnd "math/rand"
 
 	generrs "github.com/kristinjeanna/generative/errors"
-)
-
-var (
-	ErrPRNGNotInitialized = errors.New("PRNG not initialized")
 )
 
 // Rand is a math.Source64 that wraps an underlying math.Source64

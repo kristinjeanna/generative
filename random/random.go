@@ -1,6 +1,7 @@
 package random
 
 import (
+	"fmt"
 	"math"
 	mrnd "math/rand"
 
@@ -203,4 +204,8 @@ func (r Rand) Int64InRange(min, max int64) (int64, error) {
 
 	diff := max - min
 	return int64(r.Float64()*float64(diff)) + min, nil
+}
+
+func (r Rand) String() string {
+	return fmt.Sprintf("{prng=%v}", r.prng)
 }

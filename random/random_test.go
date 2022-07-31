@@ -43,6 +43,14 @@ func TestSeed(t *testing.T) {
 	r.Seed(time.Now().UnixMilli()) // coverage only
 }
 
+func TestString(t *testing.T) {
+	r, err := New(NewXoshiro512StarStar())
+	assert.NoError(t, err)
+
+	s := r.String() // coverage only
+	assert.True(t, len(s) > 0)
+}
+
 func TestFloat64(t *testing.T) {
 	r, err := New(NewXoshiro512StarStar())
 	assert.NoError(t, err)

@@ -8,17 +8,10 @@ import (
 	"github.com/kristinjeanna/generative/functional"
 )
 
-func NewPoint(x, y float64) *Point {
+func New(x, y float64) *Point {
 	return &Point{
 		x: x,
 		y: y,
-	}
-}
-
-func NewPointFromSuppliers(xSupplier, ySupplier functional.Float64Supplier) *Point {
-	return &Point{
-		x: xSupplier(),
-		y: ySupplier(),
 	}
 }
 

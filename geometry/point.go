@@ -8,7 +8,7 @@ import (
 	"github.com/kristinjeanna/generative/functional"
 )
 
-func New(x, y float64) *Point {
+func NewPoint(x, y float64) *Point {
 	return &Point{
 		x: x,
 		y: y,
@@ -48,9 +48,9 @@ func (p Point) CompareTo(o Point) int {
 	}
 
 	if p.y == o.y {
-		return compare(p.x, o.x)
+		return compare(o.x, p.x)
 	} else {
-		return compare(p.y, o.y)
+		return compare(o.y, p.y)
 	}
 }
 
@@ -67,19 +67,19 @@ func (p Point) DistanceSq(px, py float64) float64 {
 }
 
 func (p Point) Equals(o interface{}) bool {
-	var isSameType bool
-	switch o.(type) {
+	var p2 *Point
+
+	switch val := o.(type) {
 	case Point:
-		isSameType = true
-	default:
-		isSameType = false
+		p2 = &val
+	case *Point:
+		p2 = val
 	}
 
-	if !isSameType {
+	if p2 == nil {
 		return false
 	}
 
-	p2 := o.(Point)
 	return p.x == p2.x && p.y == p2.y
 }
 

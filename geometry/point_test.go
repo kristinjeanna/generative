@@ -76,6 +76,46 @@ func TestEquals(t *testing.T) {
 	}
 }
 
+func TestDistance(t *testing.T) {
+	type testCase struct {
+		px, py, expected float64
+	}
+
+	cases := []testCase{
+		{3, 4, 5},
+		{3, -4, 5},
+	}
+
+	point := NewPoint(0, 0)
+
+	for _, tc := range cases {
+		t.Run(fmt.Sprintf("px=%v;py=%v;py=%v", tc.px, tc.py, tc.expected), func(t *testing.T) {
+			got := point.Distance(tc.px, tc.py)
+			assert.Equal(t, tc.expected, got)
+		})
+	}
+}
+
+func TestDistanceSq(t *testing.T) {
+	type testCase struct {
+		px, py, expected float64
+	}
+
+	cases := []testCase{
+		{3, 4, 25},
+		{3, -4, 25},
+	}
+
+	point := NewPoint(0, 0)
+
+	for _, tc := range cases {
+		t.Run(fmt.Sprintf("px=%v;py=%v;py=%v", tc.px, tc.py, tc.expected), func(t *testing.T) {
+			got := point.DistanceSq(tc.px, tc.py)
+			assert.Equal(t, tc.expected, got)
+		})
+	}
+}
+
 func TestCompareTo(t *testing.T) {
 	type testCase struct {
 		in       Point
@@ -138,6 +178,42 @@ func TestUnmarshalJSON(t *testing.T) {
 			err := got.UnmarshalJSON([]byte(tc.in))
 			assert.Nil(t, err)
 			assert.Equal(t, tc.expected, got)
+		})
+	}
+}
+
+func TestTranslate(t *testing.T) {
+	type testCase struct {
+		pointIn    *Point
+		fIn        PointTranslator
+		distanceIn float64
+		expected   *Point
+	}
+
+	cases := []testCase{
+		{
+			&Point{0, 0},
+			func(p Point, f float64) Point {
+				return Point{p.x + f, p.y + f}
+			},
+			5,
+			&Point{5, 5},
+		},
+		{
+			&Point{-10, 2},
+			func(p Point, f float64) Point {
+				return Point{p.x + 2*f, p.y - 3*f}
+			},
+			2,
+			&Point{-6, -4},
+		},
+	}
+
+	for _, tc := range cases {
+		t.Run(fmt.Sprintf("pointIn=%v;expected=%v", tc.pointIn, tc.expected), func(t *testing.T) {
+			got := tc.pointIn.Translate(tc.fIn, tc.distanceIn)
+			assert.NotNil(t, got)
+			assert.Equal(t, *tc.expected, got)
 		})
 	}
 }

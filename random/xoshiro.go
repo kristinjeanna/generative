@@ -13,7 +13,7 @@ import (
 func NewXoshiro512StarStar() mrnd.Source64 {
 	// read 8 cryptographically-secure bytes & convert to int64
 	b := make([]byte, 8)
-	_, err := rand.Read(b)
+	_, err := rand.Read(b) //#nosec
 	if err != nil {
 		panic(err)
 	}

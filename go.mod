@@ -6,7 +6,7 @@ require golang.org/x/exp v0.0.0-20220722155223-a9213eeb770e
 
 require github.com/kbjorklu/xoshiro v0.0.0-20180620171651-d44ffcd5f559
 
-require github.com/stretchr/testify v1.8.0
+require github.com/stretchr/testify v1.8.2
 
 require (
 	github.com/davecgh/go-spew v1.1.1 // indirect
